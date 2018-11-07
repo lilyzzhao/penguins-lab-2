@@ -1,0 +1,56 @@
+---
+title: "penguin flippler lengths anova"
+author: "Lily Zhao"
+date: "11/7/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. load packages and read in penguins.csv data
+packages: tidyverse, car, onewaytests
+```{r}
+library(tidyverse)
+library(car)
+library(onewaytests)
+
+penguins<- read_csv("penguins.csv")
+```
+Is there a significant difference in mean flipper lengths for female chinstrap, gentoo, and adela penguins near Palmer. 
+
+Single factor: species
+how many levels exist within that factor: 3
+what is my one continous variable: flipper length that we will use to compare means
+
+maybe i can use a one way anova
+- assummptions tied to that:
+-independent observations
+-equal variance which we will use a levenes test for)
+- normality assumption (histogram and qq plot)
+
+how many observations exist within each group?
+table question will automatically calculates counts based on how many factors you give it
+```{r}
+counts <- with(penguins, table(species,sex))
+View(counts)
+#by the clt theorem sample means will be normally distributed but first lets look at the data to see if mean is a good metric of central tendancy to compare. 
+
+
+penguins2<- penguins %>% 
+mutate(
+  common_name=
+    case_when(
+      species=="Chinstrap penguin (Pygoscelis antarctica)"~ "Chinstrap",
+      species=="Gentoo penguin (Pygoscelis papua)" ~ "Gentoo",
+      species=="Adelie Penguin (Pygoscelis adeliae)"~"Adelie"
+    )
+) %>% 
+select(-species) %>% #GETS RID OF THAT OG COLUMN
+  filter(sex=="FEMALE")
+
+```
+
+
+
