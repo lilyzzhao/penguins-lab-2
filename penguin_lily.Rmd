@@ -52,5 +52,24 @@ select(-species) %>% #GETS RID OF THAT OG COLUMN
 
 ```
 
+Exploratory graphs and Levene's test for equal variances
+
+
+```{r}
+hists<- ggplot(penguins2, aes(x= flipper_length))+
+geom_histogram(aes(fill=common_name))+
+  facet_wrap(~common_name, scale="free")
+hists
+
+#qqplot to answer questions about normality
+
+#remember to change x to sample=
+qq<- ggplot(penguins2, aes(sample= flipper_length))+
+geom_qq(aes(fill=common_name))+
+  facet_wrap(~common_name, scale="free")
+qq
+
+#base on qq and histograms obs for each group appear normally distributed,  also n>30 for all groupps, so menas will be nomrally distributed by CLT. 
+```
 
 
